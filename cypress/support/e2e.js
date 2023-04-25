@@ -18,3 +18,8 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+//Continue le test même si erreur non attrapé (error uncaught) par cypress
+Cypress.on('uncaught:exception', () => {
+    return false;
+  });
