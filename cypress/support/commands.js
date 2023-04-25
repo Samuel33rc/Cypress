@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('connectReqRes', () => {
+    cy.request({
+        url: 'https://reqres.in/api/users'
+    })
+})
