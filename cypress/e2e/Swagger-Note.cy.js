@@ -1,8 +1,7 @@
 describe("Test API GET request", () => {
-  it("body message should be Notes API is Running", () => {
-    cy.request(
-      "https://practice.expandtesting.com/notes/api/health-check"
-    ).then((response) => {
+  it("body message yield the right informations", () => {
+    // Here you can see the usage of the custom command cy.connectNote()
+    cy.connectNote().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.message).to.eq("Notes API is Running");
       expect(response.body.success).to.equal(true);
@@ -10,8 +9,8 @@ describe("Test API GET request", () => {
   });
 });
 
-describe("login", () => {
-  it("log", () => {
+describe("Check login", () => {
+  it("Login should be succesful", () => {
     cy.request({
       method: "POST",
       url: "https://practice.expandtesting.com/notes/api/users/login",
@@ -30,8 +29,8 @@ describe("login", () => {
   });
 });
 
-describe("check profile", () => {
-  it("GET", () => {
+describe("Check profile", () => {
+  it("Status should be OK if profile exist", () => {
     cy.request({
       url: "https://practice.expandtesting.com/notes/api/users/profile",
       headers: {
@@ -42,8 +41,8 @@ describe("check profile", () => {
   });
 });
 
-describe("Testing notes", () => {
-  it("GET notes", () => {
+describe("Testing notes GET request", () => {
+  it("Response should have an item with title, description, category", () => {
     cy.request({
       url: "https://practice.expandtesting.com/notes/api/notes",
       headers: {
@@ -57,18 +56,21 @@ describe("Testing notes", () => {
 
 describe.skip("Testing creation", () => {
   it("POST a note", () => {
-    cy.request({
-      method: "POST",
-      url: "https://practice.expandtesting.com/notes/api/notes",
-      headers: {
-        "x-auth-token":
-          "0c811ef501bf4f0f91a8a49dca112cb4c8d19cbec4fa4376abb0c856be004e61",
-      },
-      body: {
-        title: "Ma SWAG note",
-        description: "Une nouvelle note de test de API Swagger Note",
-        category: "Personal",
-      },
+    // Here you can see use of external data from fixtures dir
+    cy.fixture("userData").then((note) => {
+      cy.request({
+        method: "POST",
+        url: "https://practice.expandtesting.com/notes/api/notes",
+        headers: {
+          "x-auth-token":
+            "0c811ef501bf4f0f91a8a49dca112cb4c8d19cbec4fa4376abb0c856be004e61",
+        },
+        body: {
+          title: note.title,
+          description: note.description,
+          category: note.category,
+        },
+      });
     });
   });
 });

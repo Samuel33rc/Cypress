@@ -29,3 +29,9 @@ Cypress.Commands.add('connectReqRes', () => {
         url: 'https://reqres.in/api/users'
     })
 })
+
+Cypress.Commands.add('connectNote', () => {
+    cy.request(
+        "https://practice.expandtesting.com/notes/api/health-check"
+      )
+})
