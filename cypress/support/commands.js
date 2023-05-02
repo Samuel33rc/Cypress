@@ -24,6 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import 'cypress-file-upload'
+require('cypress-downloadfile/lib/downloadFileCommand')
+
 Cypress.Commands.add('connectReqRes', () => {
     cy.request({
         url: 'https://reqres.in/api/users'
