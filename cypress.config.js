@@ -27,9 +27,11 @@ const findBrowser = () => {
 };
 
 module.exports = defineConfig({
+  projectId: "yvsawm",
+  reporter: "cypress-mochawesome-reporter",
   e2e: {
-    projectId: "yvsawm",
     setupNodeEvents(on, config) {
+      require("cypress-mochawesome-reporter/plugin")(on);
       on("task", { downloadFile });
       return findBrowser().then((browser) => {
         return {
